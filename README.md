@@ -17,12 +17,12 @@ A simple and fast Chrome extension to save bookmarks to specific folders with se
 ### Method 1: From GitHub (Recommended)
 
 1. **Download the extension:**
-   - Click the green "Code" button on this page
+   - Click the blue "Code" button on this page
    - Select "Download ZIP"
    - Extract the ZIP file to a folder
 
 2. **Install in Chrome:**
-   - Open Chrome and go to `chrome://extensions/`
+   - Open Chrome or "browser of choice" and go to `chrome://extensions/`
    - Enable "Developer mode" (toggle in top-right)
    - Click "Load unpacked"
    - Select the extracted folder
