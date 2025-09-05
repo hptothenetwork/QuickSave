@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Folder Bookmark",
+  "version": "1.0",
+  "description": "Quickly save bookmarks to a specific folder with search",
+  "permissions": [
+    "bookmarks",
+    "tabs",
+    "storage"
+  ],
+  "icons": {
+    "16": "bookmark_.png",
+    "32": "bookmark_.png",
+    "48": "bookmark_.png",
+    "128": "bookmark_.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Quick Folder Bookmark",
+    "default_icon": "bookmark_.png"
+  }
+}

@@ -1,0 +1,38 @@
+Quick Folder Bookmark - Installation Instructions
+================================================
+
+INSTALLATION STEPS:
+1. Download all extension files to a folder
+2. Open Chrome or Brave browser
+3. Go to: chrome://extensions/ (or brave://extensions/)
+4. Enable "Developer mode" (toggle in top-right)
+5. Click "Load unpacked"
+6. Select the folder containing the extension files
+7. The extension will appear in your toolbar!
+
+FILES REQUIRED:
+- manifest.json
+- popup.html
+- style.css
+- popup.js
+- bookmark_.png
+- README.md
+
+FEATURES:
+- Auto-fill current tab info
+- Smart folder browsing with icons
+- Recent folders for quick access
+- Bookmark tags system
+- Duplicate detection
+- Auto-categorization
+- Search history
+- Keyboard shortcuts (Ctrl+S to save)
+- Quick folder creation
+- Professional dark/light themes
+
+SUPPORT:
+- Works in Chrome and Brave browsers
+- No internet connection required after installation
+- All data stored locally on your device
+
+VERSION: 1.0
