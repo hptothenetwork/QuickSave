@@ -1,12 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "Quick Folder Bookmark",
-  "version": "1.0",
-  "description": "Quickly save bookmarks to a specific folder with search",
+  "name": "QuickSave - Smart Bookmarks",
+  "version": "2.0.0",
+  "description": "Quickly save bookmarks with smart categorization, tags, and advanced organization features",
   "permissions": [
     "bookmarks",
     "tabs",
     "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "icons": {
     "16": "bookmark_.png",
@@ -16,7 +19,19 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Quick Folder Bookmark",
+    "default_title": "QuickSave - Smart Bookmarks",
     "default_icon": "bookmark_.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Open QuickSave popup"
+    }
   }
 }

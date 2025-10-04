@@ -1,38 +1,115 @@
-Quick Folder Bookmark - Installation Instructions
-================================================
+QuickSave - Smart Bookmarks v2.0 - Installation Instructions
+===========================================================
 
-INSTALLATION STEPS:
-1. Download all extension files to a folder
-2. Open Chrome or Brave browser
-3. Go to: chrome://extensions/ (or brave://extensions/)
-4. Enable "Developer mode" (toggle in top-right)
-5. Click "Load unpacked"
-6. Select the folder containing the extension files
-7. The extension will appear in your toolbar!
+QUICK INSTALLATION:
+-------------------
+1. Open Chrome/Brave browser
+2. Navigate to: chrome://extensions/ (or brave://extensions/)
+3. Enable "Developer mode" (toggle switch in top-right corner)
+4. Click "Load unpacked" button
+5. Select the QuickSave folder (this folder)
+6. Done! The extension icon will appear in your toolbar
 
-FILES REQUIRED:
-- manifest.json
-- popup.html
-- style.css
-- popup.js
-- bookmark_.png
-- README.md
+IMPORTANT NOTES:
+----------------
+⚠️ Do NOT delete this folder after installation
+⚠️ Keep the folder in a permanent location
+⚠️ Moving the folder will break the extension
+
+PIN THE EXTENSION:
+------------------
+1. Click the puzzle piece icon (🧩) in Chrome toolbar
+2. Find "QuickSave - Smart Bookmarks"
+3. Click the pin icon to keep it visible in toolbar
+
+REQUIRED FILES:
+---------------
+✅ manifest.json
+✅ popup.html
+✅ popup.js
+✅ style.css
+✅ bookmark_.png
+✅ js/storage.js
+✅ js/bookmarks.js
+✅ js/ui.js
+✅ js/utils.js
+
+NEW IN VERSION 2.0:
+-------------------
+✨ Enhanced Security (CSP, Input Sanitization)
+✨ Version Migration System
+✨ Modular Code Architecture
+✨ Bookmark Notes Feature
+✨ Export/Import Settings
+✨ Theme Toggle Button
+✨ Enhanced Accessibility
+✨ Better Error Handling
+✨ URL Validation
+✨ Improved Tag Management
 
 FEATURES:
-- Auto-fill current tab info
-- Smart folder browsing with icons
-- Recent folders for quick access
-- Bookmark tags system
-- Duplicate detection
-- Auto-categorization
-- Search history
-- Keyboard shortcuts (Ctrl+S to save)
-- Quick folder creation
-- Professional dark/light themes
+---------
+📌 Auto-fill current tab info
+📂 Smart folder browsing with icons
+⏱️ Recent folders for quick access
+🏷️ Bookmark tags system
+📝 Add notes to bookmarks
+🔍 Duplicate detection
+🤖 Auto-categorization
+📜 Search history
+⌨️ Keyboard shortcuts (Ctrl+Shift+S to open, Ctrl+S to save)
+➕ Quick folder creation
+🎨 Professional dark/light themes
+💾 Export/Import data
+♿ Full accessibility support
 
-SUPPORT:
-- Works in Chrome and Brave browsers
-- No internet connection required after installation
-- All data stored locally on your device
+KEYBOARD SHORTCUTS:
+-------------------
+Ctrl+Shift+S - Open QuickSave popup
+Ctrl+S       - Save bookmark (when popup open)
+Esc          - Close popup
+Tab          - Navigate between fields
+Enter/Space  - Select folder (when focused)
 
-VERSION: 1.0
+TROUBLESHOOTING:
+----------------
+❌ Extension not loading?
+   → Make sure "Developer mode" is ON
+   → Check all files are in the folder
+   → Try reloading: click 🔄 in chrome://extensions/
+
+❌ Bookmarks not saving?
+   → Verify you selected a folder
+   → Check URL is valid (http://, https://, or chrome://)
+   → Look for error notifications
+
+❌ Lost your settings?
+   → Use Export feature (💾 button) to backup
+   → Settings stored in browser local storage
+
+PRIVACY & SECURITY:
+-------------------
+🔒 All data stored locally on your device
+🔒 No internet connection required
+🔒 No data sent to external servers
+🔒 Input sanitization prevents attacks
+🔒 Content Security Policy enforced
+
+BROWSER SUPPORT:
+----------------
+✅ Google Chrome (v88+)
+✅ Brave Browser
+✅ Microsoft Edge (Chromium)
+
+VERSION: 2.0.0
+UPDATED: October 4, 2025
+MANIFEST: V3
+
+NEED HELP?
+----------
+📖 See README.md for detailed documentation
+🐛 Report issues on GitHub
+💡 Check browser console (F12) for errors
+
+Enjoy better bookmark management! 🎉
+
