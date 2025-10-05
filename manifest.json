@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "QuickSave - Smart Bookmarks",
-  "version": "2.0.0",
-  "description": "Quickly save bookmarks with smart categorization, tags, and advanced organization features",
+  "version": "2.1.0",
+  "description": "Quickly save bookmarks with smart categorization, tags, and advanced organization features. Now with extension search!",
   "permissions": [
     "bookmarks",
     "tabs",
-    "storage"
+    "storage",
+    "management"
   ],
   "host_permissions": [
     "<all_urls>"

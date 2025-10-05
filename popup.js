@@ -3,6 +3,7 @@ import * as Storage from './js/storage.js';
 import * as Bookmarks from './js/bookmarks.js';
 import * as UI from './js/ui.js';
 import * as Utils from './js/utils.js';
+import * as Extensions from './js/extensions.js';
 
 // Global state
 const state = {
@@ -13,7 +14,9 @@ const state = {
     tags: [],
     folderStats: {},
     searchHistory: [],
-    settings: {}
+    settings: {},
+    extensions: [],
+    currentTab: 'bookmarks'
 };
 
 // Initialize when popup opens
@@ -49,6 +52,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // Setup tags system
         setupTagsSystem();
+        
+        // Setup tab navigation
+        setupTabNavigation();
         
         // Apply saved settings to checkboxes
         applySettings();
@@ -416,4 +422,233 @@ async function exportData() {
 
 // Make removeTag available globally for HTML onclick
 window.removeTag = removeTag;
+
+// ========================================
+// EXTENSIONS TAB FUNCTIONALITY
+// ========================================
+
+// Setup tab navigation
+function setupTabNavigation() {
+    const bookmarksTab = document.getElementById('tab-bookmarks');
+    const extensionsTab = document.getElementById('tab-extensions');
+    const bookmarksPanel = document.getElementById('panel-bookmarks');
+    const extensionsPanel = document.getElementById('panel-extensions');
+    
+    bookmarksTab.addEventListener('click', () => {
+        switchTab('bookmarks', bookmarksTab, extensionsTab, bookmarksPanel, extensionsPanel);
+    });
+    
+    extensionsTab.addEventListener('click', () => {
+        switchTab('extensions', extensionsTab, bookmarksTab, extensionsPanel, bookmarksPanel);
+    });
+}
+
+// Switch between tabs
+function switchTab(tabName, activeTab, inactiveTab, activePanel, inactivePanel) {
+    state.currentTab = tabName;
+    
+    // Update tab buttons
+    activeTab.classList.add('active');
+    activeTab.setAttribute('aria-selected', 'true');
+    inactiveTab.classList.remove('active');
+    inactiveTab.setAttribute('aria-selected', 'false');
+    
+    // Update panels
+    activePanel.classList.add('active');
+    activePanel.removeAttribute('hidden');
+    inactivePanel.classList.remove('active');
+    inactivePanel.setAttribute('hidden', '');
+    
+    // Load extensions when switching to extensions tab
+    if (tabName === 'extensions' && state.extensions.length === 0) {
+        loadExtensions();
+    }
+}
+
+// Load all extensions
+async function loadExtensions() {
+    try {
+        const extensionsList = document.getElementById('extensions-list');
+        extensionsList.innerHTML = '<div class="loading-state">Loading extensions...</div>';
+        
+        state.extensions = await Extensions.getAllExtensions();
+        
+        if (state.extensions.length === 0) {
+            extensionsList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">🧩</div>
+                    <div class="empty-state-text">No extensions found.<br>Install some extensions to see them here!</div>
+                </div>
+            `;
+            return;
+        }
+        
+        // Display stats
+        displayExtensionStats();
+        
+        // Display extensions
+        displayExtensions(state.extensions);
+        
+        // Setup search
+        setupExtensionSearch();
+        
+    } catch (error) {
+        console.error('Error loading extensions:', error);
+        UI.showError('Failed to load extensions');
+        document.getElementById('extensions-list').innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">⚠️</div>
+                <div class="empty-state-text">Error loading extensions.<br>Please try again.</div>
+            </div>
+        `;
+    }
+}
+
+// Display extension statistics
+function displayExtensionStats() {
+    const stats = Extensions.getExtensionStats(state.extensions);
+    const statsContainer = document.getElementById('extensions-stats');
+    
+    statsContainer.innerHTML = `
+        <div class="stat-item">
+            <div class="stat-number">${stats.total}</div>
+            <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">${stats.enabled}</div>
+            <div class="stat-label">Enabled</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">${Object.keys(stats.categories).length}</div>
+            <div class="stat-label">Categories</div>
+        </div>
+    `;
+}
+
+// Display extensions list
+function displayExtensions(extensions) {
+    const extensionsList = document.getElementById('extensions-list');
+    
+    if (extensions.length === 0) {
+        extensionsList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">🔍</div>
+                <div class="empty-state-text">No extensions match your search.</div>
+            </div>
+        `;
+        return;
+    }
+    
+    extensionsList.innerHTML = '';
+    
+    extensions.forEach(ext => {
+        const extElement = createExtensionElement(ext);
+        extensionsList.appendChild(extElement);
+    });
+}
+
+// Create extension element
+function createExtensionElement(extension) {
+    const extDiv = document.createElement('div');
+    extDiv.className = 'extension-item';
+    extDiv.setAttribute('role', 'listitem');
+    extDiv.setAttribute('data-extension-id', extension.id);
+    
+    // Icon
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'extension-icon';
+    if (extension.icon) {
+        const img = document.createElement('img');
+        img.src = extension.icon;
+        img.alt = `${extension.name} icon`;
+        iconDiv.appendChild(img);
+    } else {
+        iconDiv.textContent = '🧩';
+    }
+    
+    // Info
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'extension-info';
+    
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'extension-name';
+    nameDiv.textContent = extension.name;
+    
+    const descDiv = document.createElement('div');
+    descDiv.className = 'extension-description';
+    descDiv.textContent = extension.description || 'No description';
+    
+    infoDiv.appendChild(nameDiv);
+    infoDiv.appendChild(descDiv);
+    
+    // Actions
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'extension-actions';
+    
+    const openBtn = document.createElement('button');
+    openBtn.className = 'extension-action-btn primary';
+    openBtn.textContent = 'Open';
+    openBtn.setAttribute('aria-label', `Open ${extension.name}`);
+    openBtn.onclick = (e) => {
+        e.stopPropagation();
+        openExtension(extension.id, extension.name);
+    };
+    
+    actionsDiv.appendChild(openBtn);
+    
+    // Assemble
+    extDiv.appendChild(iconDiv);
+    extDiv.appendChild(infoDiv);
+    extDiv.appendChild(actionsDiv);
+    
+    // Click to open
+    extDiv.addEventListener('click', () => {
+        openExtension(extension.id, extension.name);
+    });
+    
+    // Keyboard support
+    extDiv.setAttribute('tabindex', '0');
+    extDiv.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openExtension(extension.id, extension.name);
+        }
+    });
+    
+    return extDiv;
+}
+
+// Open extension
+async function openExtension(extensionId, extensionName) {
+    try {
+        const success = await Extensions.openExtensionOptions(extensionId);
+        if (success) {
+            UI.showSuccess(`Opening ${extensionName}...`);
+            // Close popup after short delay
+            setTimeout(() => {
+                window.close();
+            }, 500);
+        } else {
+            UI.showError('Could not open extension');
+        }
+    } catch (error) {
+        console.error('Error opening extension:', error);
+        UI.showError('Failed to open extension');
+    }
+}
+
+// Setup extension search
+function setupExtensionSearch() {
+    const searchInput = document.getElementById('search-extensions');
+    
+    const debouncedSearch = Utils.debounce((searchText) => {
+        const filtered = Extensions.searchExtensions(state.extensions, searchText);
+        displayExtensions(filtered);
+    }, 300);
+    
+    searchInput.addEventListener('input', (e) => {
+        debouncedSearch(e.target.value);
+    });
+}
+
 

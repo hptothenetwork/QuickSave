@@ -16,7 +16,20 @@
             </div>
         </div>
         <div class="subtitle">Organize your bookmarks efficiently</div>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-navigation" role="tablist">
+            <button class="tab-btn active" id="tab-bookmarks" role="tab" aria-selected="true" aria-controls="panel-bookmarks">
+                📑 Bookmarks
+            </button>
+            <button class="tab-btn" id="tab-extensions" role="tab" aria-selected="false" aria-controls="panel-extensions">
+                🧩 Extensions
+            </button>
+        </div>
     </div>
+    
+    <!-- Bookmarks Panel -->
+    <div id="panel-bookmarks" class="tab-panel active" role="tabpanel" aria-labelledby="tab-bookmarks">
     
     <label for="bookmark-name" class="sr-only">Bookmark Name</label>
     <input type="text" id="bookmark-name" placeholder="Name" aria-required="true">
@@ -69,6 +82,22 @@
     </div>
     
     <button id="save-button" aria-label="Save bookmark">Save Bookmark</button>
+    </div>
+    
+    <!-- Extensions Panel -->
+    <div id="panel-extensions" class="tab-panel" role="tabpanel" aria-labelledby="tab-extensions" hidden>
+        <div class="extensions-search-section">
+            <label for="search-extensions" class="sr-only">Search extensions</label>
+            <input type="text" id="search-extensions" placeholder="🔍 Search your extensions..." aria-label="Search installed extensions">
+            <small class="help-text">Find and open any installed extension</small>
+        </div>
+        
+        <div class="extensions-stats" id="extensions-stats"></div>
+        
+        <div id="extensions-list" class="extensions-list" role="list" aria-label="Installed extensions">
+            <div class="loading-state">Loading extensions...</div>
+        </div>
+    </div>
     
     <script type="module" src="popup.js"></script>
 </body>

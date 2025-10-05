@@ -1,8 +1,16 @@
-# QuickSave - Smart Bookmarks Extension v2.0
+# QuickSave - Smart Bookmarks Extension v2.1
 
-A powerful and intuitive Chrome extension for managing bookmarks with advanced features like smart categorization, tags, notes, and enhanced organization.
+A powerful and intuitive Chrome extension for managing bookmarks with advanced features like smart categorization, tags, notes, enhanced organization, and now **Extension Search**!
 
-## 🚀 New in Version 2.0
+## 🚀 New in Version 2.1
+
+- ✨ **Extension Search Tab** - Search and open all your installed extensions
+- 🧩 **Quick Extension Launcher** - Find any extension instantly with search
+- 📊 **Extension Statistics** - See how many extensions you have at a glance
+- ⚡ **Fast Extension Access** - Open extension options/pages with one click
+- 🎯 **Smart Extension Detection** - Automatic categorization of extensions
+
+## 🎉 Features from v2.0
 
 - ✅ **Input Sanitization** - XSS protection and secure data handling
 - ✅ **Content Security Policy** - Enhanced security
@@ -20,6 +28,7 @@ A powerful and intuitive Chrome extension for managing bookmarks with advanced f
 
 ### Core Features
 - 🚀 **Quick Save** - Save bookmarks with one click
+- 🧩 **Extension Search** - Find and open your installed extensions instantly
 - 📁 **Smart Folder Search** - Find the right folder instantly
 - 🎯 **Auto-fill** - Current page title and URL pre-filled
 - ⌨️ **Keyboard Shortcuts** - Ctrl+Shift+S to open, Ctrl+S to save, Esc to close
@@ -62,7 +71,7 @@ A powerful and intuitive Chrome extension for managing bookmarks with advanced f
 
 ## How to Use
 
-### Basic Usage
+### Bookmarks Tab
 1. **Navigate** to any webpage you want to bookmark
 2. **Click** the QuickSave extension icon (or press Ctrl+Shift+S)
 3. **Review** the auto-filled title and URL
@@ -70,6 +79,13 @@ A powerful and intuitive Chrome extension for managing bookmarks with advanced f
 5. **Add tags** (optional) - press Enter or comma to add each tag
 6. **Add notes** (optional) - detailed information about the bookmark
 7. **Click Save** - your bookmark is saved!
+
+### Extensions Tab
+1. **Click** the "🧩 Extensions" tab at the top
+2. **Browse** all your installed Chrome extensions
+3. **Search** for any extension by name
+4. **Click** on an extension to open it
+5. **Quick Access** - Open extension options or management pages instantly
 
 ### Advanced Features
 
@@ -107,19 +123,19 @@ A powerful and intuitive Chrome extension for managing bookmarks with advanced f
 
 ```
 QuickSave/
-├── manifest.json           # Extension configuration (v2.0)
-├── popup.html             # User interface with accessibility
+├── manifest.json           # Extension configuration (v2.1)
+├── popup.html             # User interface with tabs
 ├── popup.js               # Main application logic
 ├── style.css              # Enhanced styling
 ├── js/
 │   ├── storage.js         # Storage and migration management
 │   ├── bookmarks.js       # Bookmark operations
+│   ├── extensions.js      # Extension search & management
 │   ├── ui.js              # UI management
 │   └── utils.js           # Utility functions
 ├── bookmark_.png          # Extension icon
 ├── README.md              # This file
 └── install_instructions.txt # Quick reference
-
 ```
 
 ## Troubleshooting
@@ -174,6 +190,16 @@ QuickSave/
 - ❌ Safari (Different extension format)
 
 ## Version History
+
+### v2.1.0 (2025-10-05)
+- **NEW:** Extension Search tab - Find and open all installed extensions
+- Added chrome.management API integration
+- Extension statistics display
+- Quick extension launcher
+- Search extensions by name or description
+- One-click access to extension options/pages
+- Beautiful extension cards with icons
+- Tab-based navigation (Bookmarks | Extensions)
 
 ### v2.0.0 (2025-10-04)
 - Complete architecture overhaul
