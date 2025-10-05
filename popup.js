@@ -651,4 +651,80 @@ function setupExtensionSearch() {
     });
 }
 
+// ========================================
+// BOOKMARK SEARCH FUNCTIONALITY
+// ========================================
 
+// Setup bookmark search
+function setupBookmarkSearch() {
+    const searchInput = document.getElementById('search-bookmarks');
+    const searchResults = document.getElementById('bookmark-search-results');
+    const bookmarkForm = document.getElementById('bookmark-form');
+    
+    if (!searchInput) return;
+    
+    const debouncedSearch = Utils.debounce(async (searchText) => {
+        if (!searchText || searchText.trim().length === 0) {
+            // Clear results and show form
+            searchResults.hidden = true;
+            bookmarkForm.classList.remove('hidden');
+            return;
+        }
+        
+        // Search bookmarks
+        const results = await Bookmarks.searchAllBookmarks(searchText);
+        
+        // Hide form when showing results
+        if (results.length > 0) {
+            bookmarkForm.classList.add('hidden');
+        }
+        
+        // Display results
+        UI.displayBookmarkSearchResults(results, searchText, searchResults);
+        
+        // Setup clear button
+        const clearBtn = document.getElementById('clear-bookmark-search');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                clearBookmarkSearch();
+            });
+        }
+    }, 300);
+    
+    searchInput.addEventListener('input', (e) => {
+        debouncedSearch(e.target.value);
+    });
+    
+    // Clear on Escape key
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            clearBookmarkSearch();
+        }
+    });
+}
+
+// Clear bookmark search
+function clearBookmarkSearch() {
+    const searchInput = document.getElementById('search-bookmarks');
+    const searchResults = document.getElementById('bookmark-search-results');
+    const bookmarkForm = document.getElementById('bookmark-form');
+    
+    UI.clearBookmarkSearchResults(searchResults, searchInput);
+    bookmarkForm.classList.remove('hidden');
+}
+
+// Show folder bookmarks when folder is clicked in search results
+function setupFolderBookmarksHandler() {
+    document.addEventListener('showFolderBookmarks', async (e) => {
+        const { folderId, folderPath } = e.detail;
+        await UI.displayFolderBookmarks(folderId, folderPath, Bookmarks);
+    });
+}
+
+// Initialize bookmark search on load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        setupBookmarkSearch();
+        setupFolderBookmarksHandler();
+    }, 100);
+});

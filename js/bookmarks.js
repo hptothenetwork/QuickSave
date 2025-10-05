@@ -270,3 +270,62 @@ export async function bulkMoveBookmarks(bookmarkIds, destinationFolderId) {
     
     return results;
 }
+
+// Search all bookmarks by title and URL
+export async function searchAllBookmarks(query) {
+    if (!query || query.trim().length === 0) {
+        return [];
+    }
+    
+    try {
+        const searchTerm = query.trim().toLowerCase();
+        const tree = await loadBookmarkTree();
+        const allBookmarks = [];
+        
+        // Recursively collect all bookmarks with folder path
+        function collectBookmarks(nodes, folderPath = []) {
+            for (const node of nodes) {
+                if (node.url) {
+                    // This is a bookmark
+                    allBookmarks.push({
+                        id: node.id,
+                        title: node.title || 'Untitled',
+                        url: node.url,
+                        parentId: node.parentId,
+                        folderPath: folderPath.join(' > '),
+                        dateAdded: node.dateAdded
+                    });
+                } else if (node.children) {
+                    // This is a folder, recurse into it
+                    const newPath = node.title ? [...folderPath, node.title] : folderPath;
+                    collectBookmarks(node.children, newPath);
+                }
+            }
+        }
+        
+        collectBookmarks(tree);
+        
+        // Filter bookmarks that match the search term
+        const matchingBookmarks = allBookmarks.filter(bookmark => {
+            const titleMatch = bookmark.title.toLowerCase().includes(searchTerm);
+            const urlMatch = bookmark.url.toLowerCase().includes(searchTerm);
+            return titleMatch || urlMatch;
+        });
+        
+        return matchingBookmarks;
+    } catch (error) {
+        console.error('Error searching bookmarks:', error);
+        return [];
+    }
+}
+
+// Get folder name by ID
+export async function getFolderName(folderId) {
+    try {
+        const folder = await getBookmark(folderId);
+        return folder ? folder.title : 'Unknown Folder';
+    } catch (error) {
+        console.error('Error getting folder name:', error);
+        return 'Unknown Folder';
+    }
+}

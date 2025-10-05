@@ -31,6 +31,18 @@
     <!-- Bookmarks Panel -->
     <div id="panel-bookmarks" class="tab-panel active" role="tabpanel" aria-labelledby="tab-bookmarks">
     
+    <!-- Bookmark Search Section -->
+    <div class="bookmark-search-section">
+        <label for="search-bookmarks" class="sr-only">Search your bookmarks</label>
+        <input type="text" id="search-bookmarks" placeholder="🔍 Search your bookmarks..." aria-label="Search saved bookmarks">
+        <small class="help-text">Search by name or URL (e.g., "awge" or "ai website")</small>
+    </div>
+    
+    <!-- Search Results Container -->
+    <div id="bookmark-search-results" class="bookmark-search-results" hidden></div>
+    
+    <!-- Bookmark Save Form -->
+    <div id="bookmark-form" class="bookmark-form">
     <label for="bookmark-name" class="sr-only">Bookmark Name</label>
     <input type="text" id="bookmark-name" placeholder="Name" aria-required="true">
     
@@ -82,6 +94,7 @@
     </div>
     
     <button id="save-button" aria-label="Save bookmark">Save Bookmark</button>
+    </div>
     </div>
     
     <!-- Extensions Panel -->
